@@ -48,7 +48,7 @@ SPINNER_FRAMES = ["⣾","⣽","⣻","⢿","⡿","⣟","⣯","⣷"]
 shutdown_flag = threading.Event()
 
 def print_banner():
-    print(Fore.MAGENTA + Style.BRIGHT + BANNER)
+    print(Fore.LIGHTBLUE_EX + Style.BRIGHT + BANNER)
     # cyberpunk boot animation
     for i, line in enumerate(CYBER_LINES):
         for _ in range(8):
