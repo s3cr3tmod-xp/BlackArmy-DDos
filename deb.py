@@ -157,7 +157,7 @@ def worker(idx, args, job_q: queue.Queue, metrics: Metrics, start_ts, end_ts):
         if time.time() - last_log >= 1.0 and idx == 0:
             total = metrics.success + metrics.fail
             sys.stdout.write
-            print("\033[48;5;5m| 2xx/3xx/4xx/5xx: "
+            print("
                 f"{sum(v for k,v in metrics.codes.items() if 200<=k<300)}/"
                 f"{sum(v for k,v in metrics.codes.items() if 300<=k<400)}/"
                 f"{sum(v for k,v in metrics.codes.items() if 400<=k<500)}/"
