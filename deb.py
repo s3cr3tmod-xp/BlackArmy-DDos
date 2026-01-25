@@ -157,7 +157,7 @@ def worker(idx, args, job_q: queue.Queue, metrics: Metrics, start_ts, end_ts):
                 f"{sum(v for k,v in metrics.codes.items() if 300<=k<400)}/"
                 f"{sum(v for k,v in metrics.codes.items() if 400<=k<500)}/"
                 f"{sum(v for k,v in metrics.codes.items() if 500<=k<600)}")
-            print(f"\r\033[48;5;3mThreads {args.threads} |\033[0m \033[38;5;7mSent {total}  \033[33mStarting-attack\033[0m")
+            print(f"\r\033[48;5;3mRequests for url\033[0m \033[33m" +str(url)+ " \033[32mthreads" +{args.threads}+ "|\033[0m \033[38;5;7mSent" +{total}+ "  \033[33mStarting-attack\033[0m")
             sys.stdout.flush()
             last_log = time.time()
 
@@ -188,7 +188,7 @@ def print_report(args, metrics: Metrics, start_ts, end_ts):
 
     print("\n")
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
-    print(Fore.CYAN + Style.BRIGHT + " NAI DDoS Report")
+    print(Fore.CYAN + Style.BRIGHT + " BLACK ARMY DDoS Report")
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
     print(f"{Fore.MAGENTA}Target    : {args.url}")
     print(f"{Fore.MAGENTA}Method    : {args.method} | Threads: {args.threads} | RPS/thread: {args.rps or 'unlimited'}")
