@@ -156,8 +156,8 @@ def worker(idx, args, job_q: queue.Queue, metrics: Metrics, start_ts, end_ts):
                 f"{sum(v for k,v in metrics.codes.items() if 300<=k<400)}/"
                 f"{sum(v for k,v in metrics.codes.items() if 400<=k<500)}/"
                 f"{sum(v for k,v in metrics.codes.items() if 500<=k<600)}")
-            print(f"\r\033[48;5;3mthreads {args.threads} |\033[0m \033[32mSent {total}\033[33mStarting-attack\033[0m")
-            print("\033[36mInfo requests URL \033[37m" +str(url)+ "")
+            print(f"\r\033[48;5;3mthreads {args.threads} |\033[0m \033[32mSent {total} \033[33mStarting-attack \033[37mcode:\033[0m")
+            print("\033[36mInfo-target URL\033[37m: \033[37m" +str(url)+ "\033[32mRequests_execution")
             sys.stdout.flush()
             last_log = time.time()
 
