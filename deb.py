@@ -157,11 +157,11 @@ def worker(idx, args, job_q: queue.Queue, metrics: Metrics, start_ts, end_ts):
         if time.time() - last_log >= 1.0 and idx == 0:
             total = metrics.success + metrics.fail
             sys.stdout.write
-            print("
-                f"{sum(v for k,v in metrics.codes.items() if 200<=k<300)}/"
-                f"{sum(v for k,v in metrics.codes.items() if 300<=k<400)}/"
-                f"{sum(v for k,v in metrics.codes.items() if 400<=k<500)}/"
-                f"{sum(v for k,v in metrics.codes.items() if 500<=k<600)}\033[0m")
+            print(f"\033[30m
+                {sum(v for k,v in metrics.codes.items() if 200<=k<300)}/
+                {sum(v for k,v in metrics.codes.items() if 300<=k<400)}/
+                {sum(v for k,v in metrics.codes.items() if 400<=k<500)}/
+                {sum(v for k,v in metrics.codes.items() if 500<=k<600)}/\033[0m")
             print(f"\r\033[48;5;3mThreads {args.threads} |\033[0m \033[38;5;7mSent {total}  \033[33mStarting-attack\033[0m")
             sys.stdout.flush()
             last_log = time.time()
