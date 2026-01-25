@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-#! /usr/bin/python3.12
-import os
 import argparse
 import threading
 import time
@@ -8,7 +5,6 @@ import queue
 import random
 import signal
 import sys
-import fade
 import statistics
 from datetime import datetime
 from typing import List, Dict
@@ -25,23 +21,22 @@ except ImportError:
 # --------- UI / Banner ---------
 colorama_init(autoreset=True)
 
-os.system('clear')
-logo = """
-                                              
-     ╔▒▒▒▒▒▒▒▒▒╗  ╔▒▒▒▒▒▒╗   ╔▒▒▒▒▒▒▒╗  ╔▒╗ ╔▒▒▒▒▒▒▒╗
-     ║▒╔══════▒╗ ╔▒╔════╗▒╗  ╚═════╗▒║  ║▒║ ╚═════╗▒║
-     ║▒▒▒▒▒▒▒▒▒║ ║▒║    ║▒║  ╔▒▒▒▒▒▒▒▒╗ ║▒║ ╔▒▒▒▒▒▒▒╗
-     ║▒╔═════▒╔╝ ║▒▒▒▒▒▒▒▒║  ╚══════║▒║ ║▒║ ╚══════▒║
-     ║▒▒▒▒▒▒▒▒╝  ║▒╔════╗▒║  ╔▒▒▒▒▒▒▒▒║ ║▒║ ╔▒▒▒▒▒▒▒║
-     ╚════════╝  ╚═╝    ╚═╝  ╚═══════╝  ╚▒╝ ╚═══════╝  
-╔═══╗ ╗     ╔═══╗ ╔══╗ ╗  ╔     ╔═══╗ ╔═══╗ ╔══╗══╗ ╗    ╔
-║   ║ ║     ║   ║ ║    ║  ║     ║   ║ ║   ║ ║  ║  ║ ║    ║  
-║══╗╝ ║     ╔═══╗ ║    ║══╝╗    ╔═══╗ ║═══╗ ║  ║  ║ ╚═╔═╝   
-╚══╝  ════╝ ╝   ╚ ╚══╝ ╝   ╚    ╝   ╚ ╝   ╚ ╝     ╚   ╚ """
-faded_text = fade.fire(logo)
-print(faded_text)
+BANNER = r"""
+================================================================
+=  =======  ====  ====    =====       ==       =========      ==
+=   ======  ===    ====  ======  ====  =  ====  =======  ====  =
+=    =====  ==  ==  ===  ======  ====  =  ====  =======  ====  =
+=  ==  ===  =  ====  ==  ======  ====  =  ====  ==   ===  ======
+=  ===  ==  =  ====  ==  ======  ====  =  ====  =     ====  ====
+=  ====  =  =        ==  ======  ====  =  ====  =  =  ======  ==
+=  =====    =  ====  ==  ======  ====  =  ====  =  =  =  ====  =
+=  ======   =  ====  ==  ======  ====  =  ====  =  =  =  ====  =
+=  =======  =  ====  =    =====       ==       ===   ===      ==
+================================================================
+"""
+
 CYBER_LINES = [
-    "Booting BA313L7 engine...",
+    "Booting NAI engine...",
     "Spinning up threads...",
     "Priming HTTP sessions...",
     "Arming observability...",
@@ -53,7 +48,7 @@ SPINNER_FRAMES = ["⣾","⣽","⣻","⢿","⡿","⣟","⣯","⣷"]
 shutdown_flag = threading.Event()
 
 def print_banner():
-    print(Fore.MAGENTA + Style.BRIGHT)
+    print(Fore.MAGENTA + Style.BRIGHT + BANNER)
     # cyberpunk boot animation
     for i, line in enumerate(CYBER_LINES):
         for _ in range(8):
@@ -95,7 +90,7 @@ def build_session(timeout, keepalive=True, verify_tls=True):
     s.mount("http://", adapter)
     s.mount("https://", adapter)
     s.headers.update({
-        "User-Agent": "BA313L7-LoadTester/1.0",
+        "User-Agent": "NAI-LoadTester/1.0",
         "Connection": "keep-alive" if keepalive else "close"
     })
     s.verify = verify_tls
@@ -156,13 +151,13 @@ def worker(idx, args, job_q: queue.Queue, metrics: Metrics, start_ts, end_ts):
         # eye-candy pulse
         if time.time() - last_log >= 1.0 and idx == 0:
             total = metrics.success + metrics.fail
-            sys.stdout.write
-            print(f"\033[30m
-                {sum(v for k,v in metrics.codes.items() if 200<=k<300)}/
-                {sum(v for k,v in metrics.codes.items() if 300<=k<400)}/
-                {sum(v for k,v in metrics.codes.items() if 400<=k<500)}/
-                {sum(v for k,v in metrics.codes.items() if 500<=k<600)}/\033[0m")
-            print(f"\r\033[48;5;3mThreads {args.threads} |\033[0m \033[38;5;7mSent {total}  \033[33mStarting-attack\033[0m")
+            sys.stdout.write(
+                f"\r{Fore.YELLOW} Threads {args.threads} | Sent {total} | 2xx/3xx/4xx/5xx: "
+                f"{sum(v for k,v in metrics.codes.items() if 200<=k<300)}/"
+                f"{sum(v for k,v in metrics.codes.items() if 300<=k<400)}/"
+                f"{sum(v for k,v in metrics.codes.items() if 400<=k<500)}/"
+                f"{sum(v for k,v in metrics.codes.items() if 500<=k<600)}")
+            print("
             sys.stdout.flush()
             last_log = time.time()
 
@@ -193,7 +188,7 @@ def print_report(args, metrics: Metrics, start_ts, end_ts):
 
     print("\n")
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
-    print(Fore.CYAN + Style.BRIGHT + " BA313L7 DDoS Report")
+    print(Fore.CYAN + Style.BRIGHT + " NAI DDoS Report")
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
     print(f"{Fore.MAGENTA}Target    : {args.url}")
     print(f"{Fore.MAGENTA}Method    : {args.method} | Threads: {args.threads} | RPS/thread: {args.rps or 'unlimited'}")
@@ -215,30 +210,12 @@ def print_report(args, metrics: Metrics, start_ts, end_ts):
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
 
 # --------- Main ---------
-
 def sigint_handler(signum, frame):
     shutdown_flag.set()
     print(Fore.RED + "\n[!] Ctrl-C received, shutting down...")
 
 def main():
-    print(f"{Fore.LIGHTRED_EX}╔{'═' * 56}╗")
-    print(f"{Fore.LIGHTRED_EX}║\033[48;5;3m\033[97m  Author By: Kunfayz{' ' * 35} \033[0m{Fore.LIGHTRED_EX}║")
-    print(f"{Fore.LIGHTRED_EX}║\033[48;5;3m\033[97m  Black Army Internal script{' ' * 27} \033[0m{Fore.LIGHTRED_EX}║")
-    print(f"{Fore.LIGHTRED_EX}╚{'═' * 56}╝")
-
-    attemps = 0
-    while attemps < 100:
-        username = input("\033[33m┏━> Enter your username: \033[0m")
-        password = input("\033[33m┗━> Enter your password: \033[0m")
-
-        if username == '*****' and password == '*****':
-            print("\033[48;5;3m•••⟩⟩ L0NG LIVE PALESTINE...!!\033[0m")
-            break
-        else:
-            print('Incorrect credentials. Check if you have Caps lock on and try again.')
-            attemps += 1
-            continue
-    parser = argparse.ArgumentParser(description="BA313L7 HTTP Load Tester (no raw sockets)")
+    parser = argparse.ArgumentParser(description="NAI HTTP Load Tester (no raw sockets)")
     parser.add_argument("--url", required=True, help="Target URL (e.g., https://example.com/)")
     parser.add_argument("--method", default="GET", choices=["GET", "POST", "PUT"], help="HTTP method")
     parser.add_argument("--threads", type=int, default=100, help="Number of worker threads")
@@ -252,6 +229,7 @@ def main():
     parser.add_argument("--header", action="append", default=[], help="Custom header, e.g. 'Key: Value'")
     args = parser.parse_args()
 
+    print_banner()
 
     # prepare job queue (optional mixed endpoints)
     job_q = queue.Queue()
