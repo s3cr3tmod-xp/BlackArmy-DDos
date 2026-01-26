@@ -34,12 +34,6 @@ BANNER = r"""
 ▒╚══════╝▒╚══════╝▒▒╚═╝▒╚═════╝▒╚═╝▒▒▒╚═╝▒▒╚═╝▒▒▒╚═╝╚═╝▒▒▒╚═╝╚═╝▒▒▒▒▒╚═╝▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 """
-# Versi dan URL
-    print(f"{Fore.BLUE}╔{'═' * 68}╗")
-    print(f"{Fore.BLUE}║\033[48;5;4m{' ' * 22}\033[37mA u t h o r :  K u n F z{' ' * 21} \033[0m{Fore.BLUE}║")
-    print(f"{Fore.BLUE}║\033[48;5;4m{' ' * 19}\033[37mA d m :  Z' b l a c k  3 1 3{' ' * 20} \033[0m{Fore.BLUE}║")
-    print(f"{Fore.BLUE}║\033[48;5;4m{' ' * 10}\033[37mC a n  b e  u s e d  b u t  n o t  s h a r e d{' ' * 11} \033[0m{Fore.BLUE}║")
-    print(f"{Fore.BLUE}╚{'═' * 68}╝")
 CYBER_LINES = [
     "Booting NAI engine...",
     "Spinning up threads...",
