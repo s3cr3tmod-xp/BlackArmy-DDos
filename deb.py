@@ -35,7 +35,7 @@ BANNER = r"""
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 """
 CYBER_LINES = [
-    "Booting NAI engine...",
+    "Booting Black Army engine...",
     "Spinning up threads...",
     "Priming HTTP sessions...",
     "Arming observability...",
