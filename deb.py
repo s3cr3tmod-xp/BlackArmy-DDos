@@ -217,7 +217,7 @@ def sigint_handler(signum, frame):
     print(Fore.RED + "\n[!] Ctrl-C received, shutting down...")
 
 def main():
-    parser = argparse.ArgumentParser(description="NAI HTTP Load Tester (no raw sockets)")
+    parser = argparse.ArgumentParser(description="Black Army HTTP Load Tester (no raw sockets)")
     parser.add_argument("--url", required=True, help="Target URL (e.g., https://example.com/)")
     parser.add_argument("--method", default="GET", choices=["GET", "POST", "PUT"], help="HTTP method")
     parser.add_argument("--threads", type=int, default=100, help="Number of worker threads")
