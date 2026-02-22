@@ -35,7 +35,7 @@ BANNER = r"""
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 """
 CYBER_LINES = [
-    "Booting Black Army engine...",
+    "Booting BlackArmy engine...",
     "Spinning up threads...",
     "Priming HTTP sessions...",
     "Arming observability...",
@@ -89,7 +89,7 @@ def build_session(timeout, keepalive=True, verify_tls=True):
     s.mount("http://", adapter)
     s.mount("https://", adapter)
     s.headers.update({
-        "User-Agent": "NAI-LoadTester/1.0",
+        "User-Agent": "BlackArmy-LoadTester/1.0",
         "Connection": "keep-alive" if keepalive else "close"
     })
     s.verify = verify_tls
@@ -190,7 +190,7 @@ def print_report(args, metrics: Metrics, start_ts, end_ts):
 
     print("\n")
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
-    print(Fore.CYAN + Style.BRIGHT + " BLACK ARMY DDoS Report")
+    print(Fore.CYAN + Style.BRIGHT + " BlackArmy DDoS Report")
     print(Fore.CYAN + Style.BRIGHT + "─" * 64)
     print(f"{Fore.WHITE}Target    : {args.url}")
     print(f"{Fore.WHITE}Method    : {args.method} | Threads: {args.threads} | RPS/thread: {args.rps or 'unlimited'}")
@@ -217,7 +217,7 @@ def sigint_handler(signum, frame):
     print(Fore.RED + "\n[!] Ctrl-C received, shutting down...")
 
 def main():
-    parser = argparse.ArgumentParser(description="Black Army HTTP Load Tester (no raw sockets)")
+    parser = argparse.ArgumentParser(description="BlackArmy HTTP Load Tester (no raw sockets)")
     parser.add_argument("--url", required=True, help="Target URL (e.g., https://example.com/)")
     parser.add_argument("--method", default="GET", choices=["GET", "POST", "PUT"], help="HTTP method")
     parser.add_argument("--threads", type=int, default=100, help="Number of worker threads")
