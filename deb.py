@@ -159,6 +159,8 @@ def worker(idx, args, job_q: queue.Queue, metrics: Metrics, start_ts, end_ts):
             print(f"\r\033[48;5;3mthreads {args.threads} |\033[0m \033[32mSent {total} \033[33mStarting-attack \033[32mcode: \033[0m")
             print(f"\r\033[36mInfo-target URL: \033[38;5;39mm" +str(url)+ " \033[37mReqs_execution")
             sys.stdout.flush()
+            print(f"\r\033[36mInfo-target URL: \033[38;5;39m {str(url)} \033[37mReqs_execution")
+            sys.stdout.flush()
             last_log = time.time()
 
         if delay > 0:
